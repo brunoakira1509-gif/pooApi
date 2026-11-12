@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pontec Vagas – Gerenciar vagas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Public+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="topbar">
+ <div class="wrap bar">
+  <a class="logo" href="index.html"><span>Pontec</span> Vagas</a>
+  <nav class="nav" aria-label="Principal">
+   <a class="nav-link" href="swagger-ui.html" target="_blank" rel="noopener">Documentação da API</a>
+   <button class="btn sm" id="btn-nova" type="button">Nova vaga</button>
+  </nav>
+ </div>
+</header>
+
+<main>
+ <section class="jobs-sec">
+  <div class="wrap">
+   <div class="sec-head">
+    <div>
+     <h2>Vagas cadastradas</h2>
+     <p class="muted" id="count" role="status" aria-live="polite"></p>
+    </div>
+   </div>
+   <div class="jobs" id="lista"></div>
+  </div>
+ </section>
+</main>
+
+<!-- Detalhe da vaga (GET /api/vagas/{id}) -->
+<dialog id="dlg-detalhe" aria-labelledby="d-titulo">
+ <div class="dlg-body">
+  <button class="dlg-x icon-btn" type="button" data-close aria-label="Fechar">×</button>
+  <div>
+   <h2 id="d-titulo"></h2>
+   <p class="muted" id="d-empresa"></p>
+  </div>
+  <div class="tags" id="d-tags"></div>
+  <p id="d-descricao"></p>
+  <p class="sal" id="d-salario"></p>
+  <div class="btn-row end"><button class="btn ghost" type="button" data-close>Fechar</button></div>
+ </div>
+</dialog>
+
+<!-- Formulário (POST /api/vagas e PUT /api/vagas/{id}) -->
+<dialog id="dlg-form" aria-labelledby="f-titulo-dlg">
+ <form class="dlg-body" id="form" novalidate>
+  <button class="dlg-x icon-btn" type="button" data-close aria-label="Fechar">×</button>
+  <h2 id="f-titulo-dlg">Nova vaga</h2>
+  <p class="alert" id="form-erro" role="alert" hidden></p>
+  <input type="hidden" id="f-id">
+
+  <div class="f"><label for="f-titulo">Cargo</label><input id="f-titulo" name="titulo" maxlength="120" required placeholder="Ex.: Analista de dados"><span class="err"></span></div>
+  <div class="f"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" maxlength="120" required><span class="err"></span></div>
+  <div class="grid2">
+   <div class="f"><label for="f-area">Área</label>
+    <select id="f-area" name="area" required><option value="">Selecione</option><option>Tecnologia</option><option>Dados</option><option>Design</option><option>Marketing</option><option>Finanças</option><option>Vendas</option><option>Outros</option></select><span class="err"></span></div>
+   <div class="f"><label for="f-cidade">Cidade</label><input id="f-cidade" name="cidade" maxlength="100" required placeholder="Ex.: Sorocaba, SP"><span class="err"></span></div>
+  </div>
+  <div class="grid2">
+   <div class="f"><label for="f-modalidade">Modalidade</label>
+    <select id="f-modalidade" name="modalidade" required><option value="">Selecione</option><option>Presencial</option><option>Híbrido</option><option>Remoto</option></select><span class="err"></span></div>
+   <div class="f"><label for="f-tipo">Tipo de contratação</label>
+    <select id="f-tipo" name="tipoContratacao" required><option value="">Selecione</option><option>CLT</option><option>PJ</option><option>Estágio</option><option>Temporário</option></select><span class="err"></span></div>
+  </div>
+  <div class="f"><label for="f-salario">Faixa salarial</label><input id="f-salario" name="salario" maxlength="80" placeholder="Ex.: R$ 4.000 – 6.000 ou A combinar"><span class="err"></span></div>
+  <div class="f"><label for="f-descricao">Descrição</label><textarea id="f-descricao" name="descricao" maxlength="2000" rows="5" required placeholder="Responsabilidades, requisitos e benefícios."></textarea><span class="err"></span></div>
+
+  <div class="btn-row end">
+   <button class="btn ghost" type="button" data-close>Cancelar</button>
+   <button class="btn" type="submit" id="f-salvar">Salvar</button>
+  </div>
+ </form>
+</dialog>
+
+<!-- Confirmação de exclusão (DELETE /api/vagas/{id}) -->
+<dialog id="dlg-excluir" aria-labelledby="x-titulo">
+ <div class="dlg-body">
+  <h2 id="x-titulo">Excluir vaga?</h2>
+  <p id="x-texto"></p>
+  <div class="btn-row end">
+   <button class="btn ghost" type="button" data-close>Cancelar</button>
+   <button class="btn" type="button" id="x-confirmar">Excluir</button>
+  </div>
+ </div>
+</dialog>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
